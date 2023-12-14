@@ -10,11 +10,18 @@
 
 # hlsearch on (H) or off (h):
 ~h
+# Last Search Pattern:
+~MSle0~/\V\<result\>
+
 # Command Line History (newest to oldest):
 :wq
-|2,0,1702370108,,"wq"
+|2,0,1702489627,,"wq"
 :q
-|2,0,1702367536,,"q"
+|2,0,1702489112,,"q"
+:q!
+|2,0,1702488575,,"q!"
+:dG
+|2,0,1702485462,,"dG"
 :s
 |2,0,1702366569,,"s"
 :Wq
@@ -29,253 +36,321 @@
 # Debug Line History (newest to oldest):
 
 # Registers:
-"1	LINE	0
-	service status
-|3,0,1,1,1,0,1702369515,"service status"
-"2	LINE	0
-	ENTRYPOINT  service jenkins start && service cron start  && /usr/sbin/init
-|3,0,2,1,1,0,1702367886,"ENTRYPOINT  service jenkins start && service cron start  && /usr/sbin/init"
-"3	LINE	0
+""1	LINE	0
+	result=`ps -U jenkins  | wc -l`
+	username="yangsungsoo"
+	today=`date`
+	run_message="jekins service is running ${today}"
+	notrunning_message="jenkins service is not running ${today}"
+	restart_message="jenkins serivce is restart success!! ${today}"
+	restart_fail_message="jenkins serivce is restart fail!! ${today}"
 	
-|3,0,3,1,1,0,1702367885,""
+	function MESSAGE {
+	
+	        curl -X POST --data-urlencode "payload={\"channel\": \"#docker-jenkins\", \"username\": \"yangsungsoo\", \"text\":  \"$1\" , \"icon_emoji\": \":ghost:\"}" "https://hooks.slack.com/services/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"
+	
+	}
+	
+	
+	
+	
+	if [ $result -ge 2 ]
+	then
+	echo "jenkins service is running..."
+	ret_val=$(MESSAGE "$run_message")
+	echo $ret_val
+	
+	
+	else
+	echo "jenkins service is not running.."
+	ret_val=$(MESSAGE "$notrunning_message")
+	echo $ret_val
+	
+	service jenkins start
+	
+	        if [ `ps -U jenkins | wc -l`  -ge 2 ]
+	        then
+	        echo "jenkins serivce restart success!"
+	        MESSAGE "$restart_message"
+	        else
+	        echo "jenkins serivce restart fail..!"
+	        MESSAGE "$restart_fail_message"
+	
+	        fi
+	
+	echo "jenkins service started"
+	
+	fi
+	
+|3,1,1,1,45,0,1702488609,"result=`ps -U jenkins  | wc -l`","username=\"yangsungsoo\"","today=`date`","run_message=\"jekins service is running ${today}\"","notrunning_message=\"jenkins service is not running ${today}\"","restart_message=\"jenkins serivce is restart success!! ${today}\"","restart_fail_message=\"jenkins serivce is restart fail!! ${today}\"","","function MESSAGE {","",>284
+|<"        curl -X POST --data-urlencode \"payload={\\\"channel\\\": \\\"#docker-jenkins\\\", \\\"username\\\": \\\"yangsungsoo\\\", \\\"text\\\":  \\\"$1\\\" , \\\"icon_emoji\\\": \\\":ghost:\\\"}\" \"https://hooks.slack.com/services/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\"","","}","","","","","if [ $result -ge 2 ]","then","echo \"jenkins service is running...\"","ret_val=$(MESSAGE \"$run_message\")","echo $ret_val","","","else","echo \"jenkins service is not running..\"",>44
+|<"ret_val=$(MESSAGE \"$notrunning_message\")","echo $ret_val","","service jenkins start","","        if [ `ps -U jenkins | wc -l`  -ge 2 ]","        then","        echo \"jenkins serivce restart success!\"","        MESSAGE \"$restart_message\"","        else","        echo \"jenkins serivce restart fail..!\"","        MESSAGE \"$restart_fail_message\"","","        fi","","echo \"jenkins service started\"","","fi",""
+"2	LINE	0
+	username="yangsungsoo"
+	today=`date`
+	run_message="jekins service is running ${today}"
+	notrunning_message="jenkins service is not running ${today}"
+	
+|3,0,2,1,5,0,1702485470,"username=\"yangsungsoo\"","today=`date`","run_message=\"jekins service is running ${today}\"","notrunning_message=\"jenkins service is not running ${today}\"",""
+"3	LINE	0
+	result=`ps -U jenkins  | wc -l`
+|3,0,3,1,1,0,1702485468,"result=`ps -U jenkins  | wc -l`"
 "4	LINE	0
-	ENTRYPOINT  service jenkins start && service cron start  && /usr/sbin/init 
-|3,0,4,1,1,0,1702367866,"ENTRYPOINT  service jenkins start && service cron start  && /usr/sbin/init "
+	
+|3,0,4,1,1,0,1702485458,""
 "5	LINE	0
-	RUN systemctl mask system
-|3,0,5,1,1,0,1702367350,"RUN systemctl mask system"
+	function MESSAGE {
+|3,0,5,1,1,0,1702485453,"function MESSAGE {"
+"6	LINE	0
+	echo "jenkins service started"
+	
+	fi
+	
+|3,0,6,1,4,0,1702485445,"echo \"jenkins service started\"","","fi",""
+"7	LINE	0
+		fi
+|3,0,7,1,1,0,1702485426,"	fi"
+"8	LINE	0
+	          MESSAGE "$restart_message"
+|3,0,8,1,1,0,1702485426,"          MESSAGE \"$restart_message\""
+"9	LINE	0
+	        then
+|3,0,9,1,1,0,1702485425,"        then"
+"-	CHAR	0
+	restart_message="jenkins serivce is restart success!! ${today}"
+|3,0,36,0,1,0,1702485458,"restart_message=\"jenkins serivce is restart success!! ${today}\""
 
 # File marks:
-'0  37  25  ~/Dockerfile
-|4,48,37,25,1702370108,"~/Dockerfile"
-'1  24  0  ~/crontab
-|4,49,24,0,1702369679,"~/crontab"
-'2  35  24  ~/Dockerfile
-|4,50,35,24,1702369670,"~/Dockerfile"
-'3  35  24  ~/Dockerfile
-|4,51,35,24,1702369670,"~/Dockerfile"
-'4  34  35  ~/Dockerfile
-|4,52,34,35,1702369566,"~/Dockerfile"
-'5  34  35  ~/Dockerfile
-|4,53,34,35,1702369566,"~/Dockerfile"
-'6  34  35  ~/Dockerfile
-|4,54,34,35,1702369566,"~/Dockerfile"
-'7  34  35  ~/Dockerfile
-|4,55,34,35,1702369566,"~/Dockerfile"
-'8  15  20  ~/run_check.sh
-|4,56,15,20,1702369530,"~/run_check.sh"
-'9  32  126  ~/build_outo.sh
-|4,57,32,126,1702367933,"~/build_outo.sh"
+'0  36  26  ~/Dockerfile
+|4,48,36,26,1702489627,"~/Dockerfile"
+'1  7  14  ~/crontab
+|4,49,7,14,1702489573,"~/crontab"
+'2  39  0  ~/Dockerfile
+|4,50,39,0,1702489112,"~/Dockerfile"
+'3  36  0  ~/Dockerfile
+|4,51,36,0,1702489112,"~/Dockerfile"
+'4  45  0  ~/run_check.sh
+|4,52,45,0,1702488620,"~/run_check.sh"
+'5  20  0  ~/run_check.sh
+|4,53,20,0,1702488575,"~/run_check.sh"
+'6  65  0  ~/run_check.sh
+|4,54,65,0,1702488575,"~/run_check.sh"
+'7  33  0  ~/Dockerfile
+|4,55,33,0,1702488567,"~/Dockerfile"
+'8  33  0  ~/Dockerfile
+|4,56,33,0,1702488567,"~/Dockerfile"
+'9  33  0  ~/Dockerfile
+|4,57,33,0,1702488567,"~/Dockerfile"
 
 # Jumplist (newest first):
--'  37  25  ~/Dockerfile
-|4,39,37,25,1702370108,"~/Dockerfile"
--'  35  24  ~/Dockerfile
-|4,39,35,24,1702370065,"~/Dockerfile"
--'  24  0  ~/crontab
-|4,39,24,0,1702369679,"~/crontab"
--'  24  0  ~/crontab
-|4,39,24,0,1702369679,"~/crontab"
--'  1  0  ~/crontab
-|4,39,1,0,1702369675,"~/crontab"
--'  1  0  ~/crontab
-|4,39,1,0,1702369675,"~/crontab"
--'  35  24  ~/Dockerfile
-|4,39,35,24,1702369670,"~/Dockerfile"
--'  35  24  ~/Dockerfile
-|4,39,35,24,1702369670,"~/Dockerfile"
--'  34  35  ~/Dockerfile
-|4,39,34,35,1702369643,"~/Dockerfile"
--'  34  35  ~/Dockerfile
-|4,39,34,35,1702369643,"~/Dockerfile"
--'  34  35  ~/Dockerfile
-|4,39,34,35,1702369643,"~/Dockerfile"
--'  34  35  ~/Dockerfile
-|4,39,34,35,1702369566,"~/Dockerfile"
--'  34  35  ~/Dockerfile
-|4,39,34,35,1702369566,"~/Dockerfile"
--'  38  63  ~/Dockerfile
-|4,39,38,63,1702369538,"~/Dockerfile"
--'  36  63  ~/Dockerfile
-|4,39,36,63,1702369538,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702369538,"~/Dockerfile"
--'  36  63  ~/Dockerfile
-|4,39,36,63,1702369538,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702369538,"~/Dockerfile"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
--'  15  20  ~/run_check.sh
-|4,39,15,20,1702369530,"~/run_check.sh"
+-'  36  26  ~/Dockerfile
+|4,39,36,26,1702489627,"~/Dockerfile"
+-'  39  0  ~/Dockerfile
+|4,39,39,0,1702489576,"~/Dockerfile"
+-'  7  14  ~/crontab
+|4,39,7,14,1702489573,"~/crontab"
+-'  7  14  ~/crontab
+|4,39,7,14,1702489573,"~/crontab"
+-'  23  2  ~/crontab
+|4,39,23,2,1702489561,"~/crontab"
+-'  23  2  ~/crontab
+|4,39,23,2,1702489561,"~/crontab"
+-'  36  0  ~/Dockerfile
+|4,39,36,0,1702489112,"~/Dockerfile"
+-'  36  0  ~/Dockerfile
+|4,39,36,0,1702489112,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702489098,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702489098,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702489098,"~/Dockerfile"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
+-'  45  0  ~/run_check.sh
+|4,39,45,0,1702488620,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702488607,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  20  0  ~/run_check.sh
+|4,39,20,0,1702488575,"~/run_check.sh"
+-'  65  0  ~/run_check.sh
+|4,39,65,0,1702488575,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488568,"~/run_check.sh"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  33  0  ~/Dockerfile
+|4,39,33,0,1702488567,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  34  0  ~/Dockerfile
+|4,39,34,0,1702488063,"~/Dockerfile"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
+-'  9  0  ~/run_check.sh
+|4,39,9,0,1702488038,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
 -'  1  0  ~/run_check.sh
-|4,39,1,0,1702369493,"~/run_check.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  32  126  ~/build_outo.sh
-|4,39,32,126,1702367933,"~/build_outo.sh"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  35  63  ~/Dockerfile
-|4,39,35,63,1702367905,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  34  20  ~/Dockerfile
-|4,39,34,20,1702367673,"~/Dockerfile"
--'  32  125  ~/build_outo.sh
-|4,39,32,125,1702367536,"~/build_outo.sh"
--'  32  125  ~/build_outo.sh
-|4,39,32,125,1702367536,"~/build_outo.sh"
+|4,39,1,0,1702485470,"~/run_check.sh"
+-'  1  0  ~/run_check.sh
+|4,39,1,0,1702485470,"~/run_check.sh"
+-'  1  0  ~/run_check.sh
+|4,39,1,0,1702485470,"~/run_check.sh"
+-'  1  0  ~/run_check.sh
+|4,39,1,0,1702485470,"~/run_check.sh"
+-'  1  0  ~/run_check.sh
+|4,39,1,0,1702485470,"~/run_check.sh"
+-'  1  0  ~/run_check.sh
+|4,39,1,0,1702485470,"~/run_check.sh"
+-'  1  0  ~/run_check.sh
+|4,39,1,0,1702485470,"~/run_check.sh"
 
 # History of marks within files (newest to oldest):
 
 > ~/Dockerfile
-	*	1702370107	0
-	"	37	25
-	^	37	26
-	.	37	25
+	*	1702489610	0
+	"	36	26
+	^	36	27
+	.	36	26
 	+	33	40
 	+	25	0
 	+	30	131
@@ -288,37 +363,100 @@
 	+	34	73
 	+	34	74
 	+	34	0
-	+	38	74
-	+	38	63
+	+	39	74
+	+	39	63
 	+	34	36
 	+	35	25
-	+	37	25
+	+	39	25
+	+	34	26
+	+	35	0
+	+	39	10
+	+	35	0
+	+	39	0
+	+	34	0
+	+	38	0
+	+	35	25
+	+	36	26
 
 > ~/crontab
-	*	1702369678	0
-	"	24	0
-	^	24	0
-	.	23	54
-	+	23	54
+	*	1702489572	0
+	"	7	14
+	^	7	15
+	.	7	14
+	+	23	2
+	+	24	0
+	+	23	2
+	+	7	14
 
 > ~/run_check.sh
-	*	1702369528	0
-	"	15	20
-	^	15	21
-	.	15	20
-	+	21	1
-	+	10	0
-	+	15	20
+	*	1702488617	0
+	"	45	0
+	^	45	0
+	.	44	2
+	+	1	1
+	+	1	0
+	+	1	20
+	+	1	37
+	+	1	11
+	+	1	48
+	+	1	60
+	+	1	53
+	+	1	0
+	+	1	24
+	+	1	337
+	+	1	60
+	+	1	1
+	+	1	0
+	+	1	98
+	+	1	119
+	+	1	53
+	+	1	116
+	+	1	20
+	+	1	26
+	+	1	0
+	+	1	37
+	+	1	26
+	+	1	52
+	+	1	0
+	+	1	117
+	+	1	21
+	+	1	9
+	+	1	0
+	+	1	31
+	+	1	2
+	+	1	16
+	+	1	238
+	+	1	0
+	+	1	31
+	+	43	2
+	+	7	2
+	+	1	31
+	+	44	2
 
 > ~/build_outo.sh
-	*	1702367932	0
-	"	32	126
-	^	32	127
-	.	32	126
+	*	1702470042	0
+	"	32	115
+	^	32	116
+	.	32	116
 	+	32	121
 	+	32	97
 	+	32	32
-	+	32	126
+	+	32	116
+
+> ~/cronjobs.txt
+	*	1702454834	0
+	"	1	50
+	^	1	51
+	.	1	50
+	+	1	50
+
+> ~/cronjobs.txy
+	*	1702454831	0
+	"	1	0
+
+> ~/cronjobs
+	*	1702454824	0
+	"	1	0
 
 > /tmp/crontab.IcB8ti/crontab
 	*	1702361067	0

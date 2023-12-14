@@ -33,6 +33,7 @@ RUN apt-get install -y jenkins
 RUN systemctl mask systemd
 COPY run_check.sh /root/run_check.sh
 COPY crontab /etc/crontab
-RUN chmod 777 run_check.sh
-RUN chmod 777 /etc/crontab
+RUN chmod 0777 /etc/crontab
+RUN chmod 0777 /root/run_check.sh
+
 ENTRYPOINT  service jenkins start && service cron start  && bash

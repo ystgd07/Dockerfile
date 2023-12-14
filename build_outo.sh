@@ -29,4 +29,4 @@ docker build --tag ${docker_username}/${image_name}:${version} .
 
 # Run container
 echo "=> Run container..."
-docker run -it -p 8080:8080 --privileged=true --name ${container_name} ${docker_username}/${image_name}:${version}  //sbin/init
+docker run -it -p 8080:8080 --privileged=true --name ${container_name} ${docker_username}/${image_name}:${version}  /sbin/init

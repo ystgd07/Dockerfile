@@ -1,0 +1,1 @@
+* * * * * root /root/run_check >> /var/log/cron.log
