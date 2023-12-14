@@ -24,7 +24,7 @@ pipeline {
                script {
                    withCredentials([string(credentialsId: 'username', variable: 'DOCKER_USERNAME'),
                                     string(credentialsId: 'password', variable: 'DOCKER_PASSWORD')]) {
-                       sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                       sh "docker login -u $DOCKER_USERNAME -p \'$DOCKER_PASSWORD\'"
                    }
                }
            }
