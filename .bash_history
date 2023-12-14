@@ -154,3 +154,8 @@ vi ./run_check.sh
 vi Dockerfile
 vi crontab
 vi Dockerfile
+git --version
+git add .
+git commit "pase 2"
+git commit -m  "pase 2"
+git push origin master
